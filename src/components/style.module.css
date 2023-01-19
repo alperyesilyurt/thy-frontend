@@ -1,0 +1,48 @@
+.textColor {
+  color: white;
+}
+
+.inputFly {
+  background: white;
+  color: white;
+  padding: 23px;
+  border: 0px solid;
+}
+.inputFlyIcon {
+  background: white;
+  padding: 15.6px;
+  margin-right: -12px;
+}
+
+.iconButton {
+  display: flex;
+  flex-direction: row;
+  background: red;
+  color: white;
+  padding: 17px;
+  border: 0px solid;
+}
+.personButton {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  background: #233142;
+  color: white;
+  padding: 17px;
+  border: 0px solid;
+  padding-left: 40px;
+}
+.personNumber {
+  margin-top: -10px;
+  margin-left: 10px;
+}
+.dateButton {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  background: #233142;
+  color: white;
+  padding: 16.9px;
+  border: 0px solid;
+}
