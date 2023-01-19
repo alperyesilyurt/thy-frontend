@@ -21,7 +21,6 @@ export const FlightListWrapper = styled.div`
   gap: 2px;
   background-color: white;
   padding-top: 100px;
-  height: 100vh;
 `;
 export const DataBox = styled.div`
   display: flex;
@@ -57,16 +56,17 @@ export const RowWrapper = styled.div`
 `;
 
 function FlightList() {
+  const [promotionText, setPromotionText] = useState(false)
   const state = useLocation();
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
   const navigate = useNavigate();
 
-  console.log("state ::", data);
+  console.log("state ::", promotionText);
   return (
     <>
       <FlightListWrapper>
-        <ColumnWrapper style={{ marginLeft: "-560px", marginTop: "-60px" }}>
+        <ColumnWrapper style={{ marginLeft: "-560px", marginTop: "-80px" }}>
           <Button
           onClick={()=>{navigate("/flight-query");}}
             color="white"
@@ -95,9 +95,21 @@ function FlightList() {
             <Text fontSize="sm" as="b" color="black">
               Promosyon Kodu
             </Text>
-            <Switch size="md" />
+            <Switch  
+            onChange={(e) =>
+              setPromotionText(e.target.checked)              
+            }
+            colorScheme='red' size="md" />
           </RowWrapper>
         </ColumnWrapper>
+        {promotionText&&<ColumnWrapper style={{ marginLeft: "-220px", marginTop:"10px"}} >
+            <Text fontSize="xs" color="black">
+            Promosyon Kodu seçeneği ile tüm Economy kabini Eco Fly paketlerini %50 indirimle satın alabilirsiniz!
+            </Text>
+            <Text fontSize="xs" color="black">
+            Promosyon Kodu seçeneği aktifken Eco Fly paketi haricinde seçim yapılamamaktadır.
+            </Text>
+          </ColumnWrapper>}
 
         <Card
           style={{
