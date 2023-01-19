@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import data from "../data/flights.json";
 import {
@@ -24,6 +26,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  useToast,
 } from "@chakra-ui/react";
 
 export const FlightQueryWrapper = styled.div`
@@ -46,12 +49,44 @@ export const SelectBox = styled.div`
   margin-top: 20px;
 `;
 
-console.log(data.flights);
-
 function FlightQuery() {
   const [counter, setCounter] = useState(0);
+  const [value, setValue] = useState(null);
+  const navigate = useNavigate();
+
+  const [formElements, setFormElements] = useState({
+    departure: null,
+    arrival: null,
+    date: "23.01.2023",
+    classType: null,
+    passenger: null,
+  });
+
+  useEffect(() => {
+    setFormElements({ ...formElements, classType: value, passenger: counter });
+  }, [value, counter]);
+
+  const toast = useToast();
+
   const buttonFunc = () => {
-    console.log("lolll");
+    const matchedFlights = data.flights.filter((item) => {
+      return (
+        item.originAirport.city.name === formElements.departure &&
+        item.destinationAirport.city.name === formElements.arrival
+      );
+    });
+
+    if (matchedFlights?.length !== 0) {
+      navigate("/flight-list", {state: {matchedFlights}  });
+    } else {
+      toast({
+        title: "Opps, Hata",
+        description: "Aradığınız uçuş bulunamadı.",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -66,6 +101,9 @@ function FlightQuery() {
         <InputGroup>
           <InputLeftElement children={<FaPlaneDeparture />} />
           <Input
+            onChange={(e) =>
+              setFormElements({ ...formElements, departure: e.target.value })
+            }
             variant="filled"
             height="48px"
             size="lg"
@@ -77,6 +115,9 @@ function FlightQuery() {
         <InputGroup>
           <InputLeftElement children={<FaPlaneArrival />} />
           <Input
+            onChange={(e) =>
+              setFormElements({ ...formElements, arrival: e.target.value })
+            }
             variant="filled"
             height="48px"
             size="lg"
@@ -110,7 +151,7 @@ function FlightQuery() {
               variant="solid"
               leftIcon={<BsPersonFill />}
             >
-              1
+              {counter}
             </Button>
           </PopoverTrigger>
           <PopoverContent borderRadius="0px">
@@ -123,9 +164,9 @@ function FlightQuery() {
               </Text>
 
               <Stack direction="row">
-                <RadioGroup>
-                  <Radio value="1">Economy Class</Radio>
-                  <Radio value="2">Business Class</Radio>
+                <RadioGroup onChange={setValue} value={value}>
+                  <Radio value="Economy Class">Economy Class</Radio>
+                  <Radio value="Business Class">Business Class</Radio>
                 </RadioGroup>
               </Stack>
               <Stack direction="row">

@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 function FlightList() {
+  const state = useLocation();
+  const data = state.state.matchedFlights;
+
+  console.log("mathecd adsdlşajs ::", data[0]);
   return (
-    <div>FlightList page</div>
-  )
+  <>
+  <p>{data[0]?.originAirport?.city?.name}</p>
+  
+  </>
+  );
 }
-export default FlightList
+export default FlightList;
