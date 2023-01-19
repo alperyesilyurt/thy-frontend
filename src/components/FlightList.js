@@ -12,6 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const FlightListWrapper = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ function FlightList() {
   const state = useLocation();
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
+  const navigate = useNavigate();
 
   console.log("state ::", data);
   return (
@@ -66,6 +68,7 @@ function FlightList() {
       <FlightListWrapper>
         <ColumnWrapper style={{ marginLeft: "-560px", marginTop: "-60px" }}>
           <Button
+          onClick={()=>{navigate("/flight-query");}}
             color="white"
             width="50%"
             background="#E81932"

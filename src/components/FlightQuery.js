@@ -98,7 +98,7 @@ function FlightQuery() {
         Nereyi keşfetmek istersiniz?
       </Text>
       <SelectBox>
-        <InputGroup>
+        <InputGroup width="200px">
           <InputLeftElement children={<FaPlaneDeparture />} />
           <Input
             onChange={(e) =>
@@ -112,7 +112,7 @@ function FlightQuery() {
             placeholder="Nereden"
           />
         </InputGroup>
-        <InputGroup>
+        <InputGroup width="200px">
           <InputLeftElement children={<FaPlaneArrival />} />
           <Input
             onChange={(e) =>
@@ -130,7 +130,7 @@ function FlightQuery() {
         <Button
           size="lg"
           height="48px"
-          width="200px"
+          width="100px"
           background="#233142"
           color="white"
           borderRadius="0px"
@@ -144,7 +144,7 @@ function FlightQuery() {
             <Button
               size="lg"
               height="48px"
-              width="200px"
+              width="100px"
               background="#233142"
               color="white"
               borderRadius="0px"
@@ -200,7 +200,7 @@ function FlightQuery() {
           onClick={() => buttonFunc()}
           size="xs"
           height="48px"
-          width="200px"
+          width="100px"
           colorScheme="red"
           borderRadius="0px"
           icon={<BsChevronRight size={20} />}
