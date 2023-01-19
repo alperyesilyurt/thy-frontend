@@ -77,7 +77,7 @@ function FlightQuery() {
     });
 
     if (matchedFlights?.length !== 0) {
-      navigate("/flight-list", {state: {matchedFlights}  });
+      navigate("/flight-list", {state: {matchedFlights:matchedFlights,formElements:formElements}  });
     } else {
       toast({
         title: "Opps, Hata",
