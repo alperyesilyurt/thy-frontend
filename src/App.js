@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react'
 import Template404 from "./components/Template404";
 import FlightList from "./components/FlightList";
 import FlightQuery from "./components/FlightQuery";
@@ -6,7 +7,7 @@ import CabinSelection from "./components/CabinSelection";
 import Home from "./components/Home";
 function App() {
   return (
-    <div>
+    <ChakraProvider>
       {/* 
       <div>
         <Link to="/">Home</Link>
@@ -27,7 +28,7 @@ function App() {
         <Route path="/cabin-selection" element={<CabinSelection />} />
         <Route path="*" element={<Template404 />} />
       </Routes>
-    </div>
+      </ChakraProvider>
   );
 }
 export default App;
