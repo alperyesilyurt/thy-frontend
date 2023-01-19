@@ -27,7 +27,7 @@ export const DataBox = styled.div`
   gap: 10px;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
-  padding: 20px;
+  padding: 10px;
   margin-top: 20px;
   width: 380px;
 
@@ -84,7 +84,9 @@ function FlightList() {
             {data &&
               data.map((item) => {
                 return (
-                  <DataBox>
+                <>
+                <div style={{display:"flex", gap:"10px"}}> 
+                <DataBox>
                     <ColumnWrapper>
                       <Text fontSize="xs" as='b' color="black">
                         {item.arrivalDateTimeDisplay}
@@ -96,7 +98,7 @@ function FlightList() {
                         {item.originAirport.city.name}
                       </Text>
                     </ColumnWrapper>
-                    <Divider width="150px"/>
+                    <Divider width="150px" borderWidth="1px"/>
                     <ColumnWrapper>
                       <Text fontSize="xs" as='b' color="black">
                         {item.departureDateTimeDisplay}
@@ -117,6 +119,15 @@ function FlightList() {
                       </Text>
                     </ColumnWrapper>
                   </DataBox>
+                  <DataBox>
+                    {formData.classType}
+                  </DataBox>
+                  <DataBox>
+                    radio2
+                  </DataBox>
+                  </div>
+                </>
+                  
                 );
               })}
           </CardBody>
