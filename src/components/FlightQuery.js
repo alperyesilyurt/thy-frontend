@@ -11,7 +11,6 @@ import { MinusIcon, AddIcon } from "@chakra-ui/icons";
 
 import {
   IconButton,
-  Select,
   Button,
   Text,
   Popover,
@@ -22,6 +21,9 @@ import {
   RadioGroup,
   Stack,
   Radio,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 
 export const FlightQueryWrapper = styled.div`
@@ -61,34 +63,28 @@ function FlightQuery() {
         Nereyi keşfetmek istersiniz?
       </Text>
       <SelectBox>
-        <Select
-          variant="filled"
-          height="48px"
-          size="lg"
-          borderRadius="0px"
-          icon={<FaPlaneDeparture />}
-          placeholder="Nereden"
-        >
-          {data.flights.map((item) => (
-            <option value={item.originAirport.code}>
-              {item.originAirport.city.name}
-            </option>
-          ))}
-        </Select>
-        <Select
-          variant="filled"
-          height="48px"
-          size="lg"
-          borderRadius="0px"
-          icon={<FaPlaneArrival />}
-          placeholder="Nereye"
-        >
-          {data.flights.map((item) => (
-            <option value={item.destinationAirport.code}>
-              {item.destinationAirport.city.name}
-            </option>
-          ))}
-        </Select>
+        <InputGroup>
+          <InputLeftElement children={<FaPlaneDeparture />} />
+          <Input
+            variant="filled"
+            height="48px"
+            size="lg"
+            borderRadius="0px"
+            icon={<FaPlaneDeparture />}
+            placeholder="Nereden"
+          />
+        </InputGroup>
+        <InputGroup>
+          <InputLeftElement children={<FaPlaneArrival />} />
+          <Input
+            variant="filled"
+            height="48px"
+            size="lg"
+            borderRadius="0px"
+            icon={<FaPlaneDeparture />}
+            placeholder="Nereye"
+          />
+        </InputGroup>
 
         <Button
           size="lg"
@@ -127,7 +123,7 @@ function FlightQuery() {
               </Text>
 
               <Stack direction="row">
-                <RadioGroup >
+                <RadioGroup>
                   <Radio value="1">Economy Class</Radio>
                   <Radio value="2">Business Class</Radio>
                 </RadioGroup>
@@ -137,8 +133,8 @@ function FlightQuery() {
                   Yolcu
                 </Text>
                 <IconButton
-                onClick={()=> setCounter(counter-1)}
-                isDisabled={counter<=0}
+                  onClick={() => setCounter(counter - 1)}
+                  isDisabled={counter <= 0}
                   size="xs"
                   height="28px"
                   colorScheme="gray"
@@ -148,7 +144,7 @@ function FlightQuery() {
                   {counter}
                 </Text>
                 <IconButton
-                 onClick={()=>setCounter(counter+1)}
+                  onClick={() => setCounter(counter + 1)}
                   size="xs"
                   height="28px"
                   colorScheme="gray"
@@ -160,7 +156,7 @@ function FlightQuery() {
         </Popover>
 
         <IconButton
-        onClick={()=>buttonFunc()}
+          onClick={() => buttonFunc()}
           size="xs"
           height="48px"
           width="200px"
