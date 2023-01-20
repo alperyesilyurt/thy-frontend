@@ -56,19 +56,22 @@ export const RowWrapper = styled.div`
 `;
 
 function FlightList() {
-  const [promotionText, setPromotionText] = useState(false)
+  const [promotionText, setPromotionText] = useState(false);
+  const [radioArea, setRadioArea] = useState(false);
   const state = useLocation();
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
   const navigate = useNavigate();
 
-  console.log("state ::", promotionText);
+  console.log("state ::", radioArea);
   return (
     <>
       <FlightListWrapper>
         <ColumnWrapper style={{ marginLeft: "-560px", marginTop: "-80px" }}>
           <Button
-          onClick={()=>{navigate("/flight-query");}}
+            onClick={() => {
+              navigate("/flight-query");
+            }}
             color="white"
             width="50%"
             background="#E81932"
@@ -95,21 +98,25 @@ function FlightList() {
             <Text fontSize="sm" as="b" color="black">
               Promosyon Kodu
             </Text>
-            <Switch  
-            onChange={(e) =>
-              setPromotionText(e.target.checked)              
-            }
-            colorScheme='red' size="md" />
+            <Switch
+              onChange={(e) => setPromotionText(e.target.checked)}
+              colorScheme="red"
+              size="md"
+            />
           </RowWrapper>
         </ColumnWrapper>
-        {promotionText&&<ColumnWrapper style={{ marginLeft: "-220px", marginTop:"10px"}} >
+        {promotionText && (
+          <ColumnWrapper style={{ marginLeft: "-220px", marginTop: "10px" }}>
             <Text fontSize="xs" color="black">
-            Promosyon Kodu seçeneği ile tüm Economy kabini Eco Fly paketlerini %50 indirimle satın alabilirsiniz!
+              Promosyon Kodu seçeneği ile tüm Economy kabini Eco Fly paketlerini
+              %50 indirimle satın alabilirsiniz!
             </Text>
             <Text fontSize="xs" color="black">
-            Promosyon Kodu seçeneği aktifken Eco Fly paketi haricinde seçim yapılamamaktadır.
+              Promosyon Kodu seçeneği aktifken Eco Fly paketi haricinde seçim
+              yapılamamaktadır.
             </Text>
-          </ColumnWrapper>}
+          </ColumnWrapper>
+        )}
 
         <Card
           style={{
@@ -153,6 +160,9 @@ function FlightList() {
             </CardHeader>
             {data &&
               data.map((item) => {
+                console.log(
+                  item.fareCategories.ECONOMY.subcategories[0].price.amount
+                );
                 return (
                   <>
                     <div style={{ display: "flex", gap: "10px" }}>
@@ -197,7 +207,10 @@ function FlightList() {
                         }}
                       >
                         <DataBoxRadio>
-                          <Radio value="1">
+                          <Radio
+                            value="1"
+                            onChange={() => setRadioArea(true)}
+                          >
                             <Text fontSize="xs" as="u" color="black">
                               ECONOMY
                             </Text>
@@ -206,8 +219,12 @@ function FlightList() {
                             <Text fontSize="xs" color="black">
                               Yolcu başına
                             </Text>
-                            <Text fontSize="xs" color="black">
-                              TRY 0
+                            <Text fontSize="xs" as="b" color="black">
+                              TRY{" "}
+                              {
+                                item.fareCategories.ECONOMY.subcategories[0]
+                                  .price.amount
+                              }
                             </Text>
                           </ColumnWrapper>
                         </DataBoxRadio>
@@ -221,8 +238,12 @@ function FlightList() {
                             <Text fontSize="xs" color="black">
                               Yolcu başına
                             </Text>
-                            <Text fontSize="xs" color="black">
-                              TRY 0
+                            <Text fontSize="xs" as="b" color="black">
+                              TRY{" "}
+                              {
+                                item.fareCategories.BUSINESS.subcategories[0]
+                                  .price.amount
+                              }
                             </Text>
                           </ColumnWrapper>
                         </DataBoxRadio>
