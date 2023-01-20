@@ -16,10 +16,11 @@ import {
   Box,
   CardFooter,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { sortBy } from "lodash-es";
 
 export const FlightListWrapper = styled.div`
   display: flex;
@@ -63,13 +64,22 @@ export const RowWrapper = styled.div`
 
 function FlightList() {
   const [promotionText, setPromotionText] = useState(false);
-  const [radioArea, setRadioArea] = useState(false);
   const state = useLocation();
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
   const navigate = useNavigate();
+  const sortedData = useMemo(
+    () => sortBy(data, "fareCategories").reverse(),
+    [data]
+  );
+  console.log("sortedData", sortedData);
+  const orderPrice = () => {
+    console.log("order sırala");
+  };
+  const orderTime = () => {
+    console.log("time sırala");
+  };
 
-  console.log("state ::", radioArea);
   return (
     <>
       <FlightListWrapper>
@@ -145,6 +155,7 @@ function FlightList() {
               Sıralama kriteri
             </Text>
             <Button
+              onClick={() => orderPrice()}
               color="white"
               variant="outline"
               size="xs"
@@ -154,6 +165,7 @@ function FlightList() {
               Ekonomi Ücreti
             </Button>
             <Button
+              onClick={() => orderTime()}
               color="white"
               variant="outline"
               size="xs"
@@ -164,8 +176,8 @@ function FlightList() {
             </Button>
           </CardHeader>
           <CardBody>
-            {data &&
-              data.map((item) => {
+            {sortedData &&
+              sortedData.map((item) => {
                 console.log(
                   item.fareCategories.ECONOMY.subcategories[0].price.amount
                 );
@@ -173,7 +185,12 @@ function FlightList() {
                   <>
                     <Tabs variant="unstyled" align="center">
                       <TabList
-                        style={{ display: "flex", height: "90px", gap: "20px" }}
+                        style={{
+                          display: "flex",
+                          height: "90px",
+                          gap: "20px",
+                          marginBottom: "-10px",
+                        }}
                       >
                         <Tab
                           style={{ marginLeft: "-20px", marginRight: "-20px" }}
@@ -303,14 +320,34 @@ function FlightList() {
                                           >
                                             {cards.brandCode}
                                           </Text>
-                                          <Text
-                                            fontSize="md"
-                                            as="b"
-                                            color="black"
-                                          >
-                                            {cards.price.currency}{" "}
-                                            {cards.price.amount}
-                                          </Text>
+                                          {promotionText &&
+                                          cards.brandCode === "ecoFly" ? (
+                                            <Text
+                                              fontSize="xs"
+                                              as="b"
+                                              color="green"
+                                            >
+                                              <Text
+                                                fontSize="xs"
+                                                as="s"
+                                                color="red"
+                                              >
+                                                {cards.price.currency}{" "}
+                                                {cards.price.amount}
+                                              </Text>
+                                              {cards.price.currency}{" "}
+                                              {cards.price.amount / 2}
+                                            </Text>
+                                          ) : (
+                                            <Text
+                                              fontSize="md"
+                                              as="b"
+                                              color="black"
+                                            >
+                                              {cards.price.currency}{" "}
+                                              {cards.price.amount}
+                                            </Text>
+                                          )}
                                         </CardHeader>
                                         <CardBody>
                                           {cards.rights.map((right) => {
@@ -330,15 +367,21 @@ function FlightList() {
                                         </CardBody>
                                         <CardFooter>
                                           <Button
+                                            isDisabled={
+                                              promotionText &&
+                                              cards.brandCode !== "ecoFly"
+                                            }
                                             onClick={() => {
                                               if (
                                                 cards.status === "AVAILABLE"
                                               ) {
                                                 navigate("/cabin-selection", {
-                                                  
                                                   state: {
                                                     status: "AVAILABLE",
-                                                    totalPrice: cards?.price?.currency + " " +cards?.price?.amount 
+                                                    totalPrice:
+                                                      cards?.price?.currency +
+                                                      " " +
+                                                      cards?.price?.amount,
                                                   },
                                                 });
                                               } else {
@@ -403,14 +446,34 @@ function FlightList() {
                                           >
                                             {cards.brandCode}
                                           </Text>
-                                          <Text
-                                            fontSize="md"
-                                            as="b"
-                                            color="black"
-                                          >
-                                            {cards.price.currency}{" "}
-                                            {cards.price.amount}
-                                          </Text>
+                                          {promotionText &&
+                                          cards.brandCode === "ecoFly" ? (
+                                            <Text
+                                              fontSize="xs"
+                                              as="b"
+                                              color="green"
+                                            >
+                                              <Text
+                                                fontSize="xs"
+                                                as="s"
+                                                color="red"
+                                              >
+                                                {cards.price.currency}{" "}
+                                                {cards.price.amount}
+                                              </Text>
+                                              {cards.price.currency}{" "}
+                                              {cards.price.amount / 2}
+                                            </Text>
+                                          ) : (
+                                            <Text
+                                              fontSize="md"
+                                              as="b"
+                                              color="black"
+                                            >
+                                              {cards.price.currency}{" "}
+                                              {cards.price.amount}
+                                            </Text>
+                                          )}
                                         </CardHeader>
                                         <CardBody>
                                           {cards.rights.map((right) => {
@@ -430,6 +493,10 @@ function FlightList() {
                                         </CardBody>
                                         <CardFooter>
                                           <Button
+                                            isDisabled={
+                                              promotionText &&
+                                              cards.brandCode !== "ecoFly"
+                                            }
                                             onClick={() => {
                                               if (
                                                 cards.status === "AVAILABLE"
