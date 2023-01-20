@@ -8,6 +8,12 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -26,12 +32,11 @@ export const DataBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
   padding: 10px;
-  margin-top: 20px;
   width: 380px;
+  height: 100px;
 `;
 export const DataBoxRadio = styled.div`
   display: flex;
@@ -41,8 +46,8 @@ export const DataBoxRadio = styled.div`
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
   padding: 10px;
-  margin-top: 20px;
   width: 190px;
+  height: 100px;
 `;
 export const ColumnWrapper = styled.div`
   display: flex;
@@ -125,39 +130,39 @@ function FlightList() {
             marginTop: "20px",
           }}
         >
-          <CardBody>
-            <CardHeader
-              style={{
-                background: "#063048",
-                display: "flex",
-                justifyContent: "right",
-                alignItems: "center",
-                flexDirection: "row",
-                gap: "10px",
-              }}
+          <CardHeader
+            style={{
+              background: "#063048",
+              display: "flex",
+              justifyContent: "right",
+              alignItems: "center",
+              flexDirection: "row",
+              gap: "10px",
+            }}
+          >
+            <Text fontSize="xs" color="white">
+              Sıralama kriteri
+            </Text>
+            <Button
+              color="white"
+              variant="outline"
+              size="xs"
+              height="12px"
+              padding="12px"
             >
-              <Text fontSize="xs" color="white">
-                Sıralama kriteri
-              </Text>
-              <Button
-                color="white"
-                variant="outline"
-                size="xs"
-                height="12px"
-                padding="12px"
-              >
-                Ekonomi Ücreti
-              </Button>
-              <Button
-                color="white"
-                variant="outline"
-                size="xs"
-                height="12px"
-                padding="12px"
-              >
-                Kalkış Saati
-              </Button>
-            </CardHeader>
+              Ekonomi Ücreti
+            </Button>
+            <Button
+              color="white"
+              variant="outline"
+              size="xs"
+              height="12px"
+              padding="12px"
+            >
+              Kalkış Saati
+            </Button>
+          </CardHeader>
+          <CardBody>
             {data &&
               data.map((item) => {
                 console.log(
@@ -165,90 +170,248 @@ function FlightList() {
                 );
                 return (
                   <>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                      <DataBox>
-                        <ColumnWrapper>
-                          <Text fontSize="xs" as="b" color="black">
-                            {item.arrivalDateTimeDisplay}
-                          </Text>
-                          <Text fontSize="xs" color="black">
-                            {item.originAirport.city.code}
-                          </Text>
-                          <Text fontSize="xs" color="black">
-                            {item.originAirport.city.name}
-                          </Text>
-                        </ColumnWrapper>
-                        <Divider width="150px" borderWidth="1px" />
-                        <ColumnWrapper>
-                          <Text fontSize="xs" as="b" color="black">
-                            {item.departureDateTimeDisplay}
-                          </Text>
-                          <Text fontSize="xs" color="black">
-                            {item.destinationAirport.city.code}
-                          </Text>
-                          <Text fontSize="xs" color="black">
-                            {item.destinationAirport.city.name}
-                          </Text>
-                        </ColumnWrapper>
-                        <ColumnWrapper style={{ marginLeft: "30px" }}>
-                          <Text fontSize="xs" color="black">
-                            Uçuş Süresi
-                          </Text>
-                          <Text fontSize="xs" as="b" color="black">
-                            {item.flightDuration}
-                          </Text>
-                        </ColumnWrapper>
-                      </DataBox>
-                      <RadioGroup
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "10px",
-                        }}
+                    <Tabs variant="unstyled" align="center">
+                      <TabList
+                        style={{ display: "flex", height: "90px", gap: "20px" }}
                       >
-                        <DataBoxRadio>
-                          <Radio
-                            value="1"
-                            onChange={() => setRadioArea(true)}
-                          >
+                        <Tab
+                          style={{ marginLeft: "-20px", marginRight: "-20px" }}
+                        >
+                          <DataBox>
+                            <ColumnWrapper>
+                              <Text fontSize="xs" as="b" color="black">
+                                {item.arrivalDateTimeDisplay}
+                              </Text>
+                              <Text fontSize="xs" color="black">
+                                {item.originAirport.city.code}
+                              </Text>
+                              <Text fontSize="xs" color="black">
+                                {item.originAirport.city.name}
+                              </Text>
+                            </ColumnWrapper>
+                            <Divider width="150px" borderWidth="1px" />
+                            <ColumnWrapper>
+                              <Text fontSize="xs" as="b" color="black">
+                                {item.departureDateTimeDisplay}
+                              </Text>
+                              <Text fontSize="xs" color="black">
+                                {item.destinationAirport.city.code}
+                              </Text>
+                              <Text fontSize="xs" color="black">
+                                {item.destinationAirport.city.name}
+                              </Text>
+                            </ColumnWrapper>
+                            <ColumnWrapper style={{ marginLeft: "30px" }}>
+                              <Text fontSize="xs" color="black">
+                                Uçuş Süresi
+                              </Text>
+                              <Text fontSize="xs" as="b" color="black">
+                                {item.flightDuration}
+                              </Text>
+                            </ColumnWrapper>
+                          </DataBox>
+                        </Tab>
+                        <Tab
+                          style={{ marginLeft: "-20px", marginRight: "-20px" }}
+                        >
+                          <DataBoxRadio>
                             <Text fontSize="xs" as="u" color="black">
                               ECONOMY
                             </Text>
-                          </Radio>
-                          <ColumnWrapper>
-                            <Text fontSize="xs" color="black">
-                              Yolcu başına
-                            </Text>
-                            <Text fontSize="xs" as="b" color="black">
-                              TRY{" "}
-                              {
-                                item.fareCategories.ECONOMY.subcategories[0]
-                                  .price.amount
-                              }
-                            </Text>
-                          </ColumnWrapper>
-                        </DataBoxRadio>
-                        <DataBoxRadio>
-                          <Radio value="2">
+
+                            <ColumnWrapper>
+                              <Text fontSize="xs" color="black">
+                                Yolcu başına
+                              </Text>
+                              <Text fontSize="xs" as="b" color="black">
+                                TRY{" "}
+                                {
+                                  item.fareCategories.ECONOMY.subcategories[0]
+                                    .price.amount
+                                }
+                              </Text>
+                            </ColumnWrapper>
+                          </DataBoxRadio>
+                        </Tab>
+                        <Tab
+                          style={{ marginLeft: "-20px", marginRight: "-20px" }}
+                        >
+                          {" "}
+                          <DataBoxRadio>
                             <Text fontSize="xs" as="u" color="black">
                               BUSINESS
                             </Text>
-                          </Radio>
-                          <ColumnWrapper>
-                            <Text fontSize="xs" color="black">
-                              Yolcu başına
-                            </Text>
-                            <Text fontSize="xs" as="b" color="black">
-                              TRY{" "}
-                              {
-                                item.fareCategories.BUSINESS.subcategories[0]
-                                  .price.amount
-                              }
-                            </Text>
-                          </ColumnWrapper>
-                        </DataBoxRadio>
-                      </RadioGroup>
-                    </div>
+
+                            <ColumnWrapper>
+                              <Text fontSize="xs" color="black">
+                                Yolcu başına
+                              </Text>
+                              <Text fontSize="xs" as="b" color="black">
+                                TRY{" "}
+                                {
+                                  item.fareCategories.BUSINESS.subcategories[0]
+                                    .price.amount
+                                }
+                              </Text>
+                            </ColumnWrapper>
+                          </DataBoxRadio>
+                        </Tab>
+                      </TabList>
+                      {
+                        <TabPanels>
+                          <TabPanel></TabPanel>
+                          <TabPanel>
+                            <DataBox
+                              style={{
+                                width: "782px",
+                                height: "260px",
+                                marginLeft: "-27px",
+                              }}
+                            >
+                              {item.fareCategories.ECONOMY.subcategories.map(
+                                (cards) => {
+                                  return (
+                                    <RowWrapper
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginLeft: "8px",
+                                        marginRight: "8px",
+                                      }}
+                                    >
+                                      <Card
+                                        style={{
+                                          width: "238px",
+                                          height: "230px",
+                                        }}
+                                      >
+                                        <CardHeader
+                                          style={{
+                                            background: "#f9f9f9",
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            flexDirection: "row",
+                                            gap: "10px",
+                                          }}
+                                        >
+                                          <Text
+                                            fontSize="md"
+                                            as="b"
+                                            color="black"
+                                          >
+                                            {cards.brandCode}
+                                          </Text>
+                                          <Text
+                                            fontSize="md"
+                                            as="b"
+                                            color="black"
+                                          >
+                                            {cards.price.currency}{" "}
+                                            {cards.price.amount}
+                                          </Text>
+                                        </CardHeader>
+                                        <CardBody>
+                                          {cards.rights.map((right) => {
+                                            return (
+                                              <ColumnWrapper>
+                                                <Box
+                                                  borderWidth="1px"
+                                                  w="100%"
+                                                  p={1}
+                                                  color="black"
+                                                >
+                                                  {right}
+                                                </Box>
+                                              </ColumnWrapper>
+                                            );
+                                          })}
+                                        </CardBody>
+                                      </Card>
+                                    </RowWrapper>
+                                  );
+                                }
+                              )}
+                            </DataBox>
+                          </TabPanel>
+                          <TabPanel>
+                            <DataBox
+                              style={{
+                                width: "782px",
+                                height: "260px",
+                                marginLeft: "-27px",
+                              }}
+                            >
+                              {item.fareCategories.BUSINESS.subcategories.map(
+                                (cards) => {
+                                  return (
+                                    <RowWrapper
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginLeft: "8px",
+                                        marginRight: "8px",
+                                      }}
+                                    >
+                                      <Card
+                                        style={{
+                                          width: "238px",
+                                          height: "230px",
+                                        }}
+                                      >
+                                        <CardHeader
+                                          style={{
+                                            background: "#f9f9f9",
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                            flexDirection: "row",
+                                            gap: "10px",
+                                          }}
+                                        >
+                                          <Text
+                                            fontSize="md"
+                                            as="b"
+                                            color="black"
+                                          >
+                                            {cards.brandCode}
+                                          </Text>
+                                          <Text
+                                            fontSize="md"
+                                            as="b"
+                                            color="black"
+                                          >
+                                            {cards.price.currency}{" "}
+                                            {cards.price.amount}
+                                          </Text>
+                                        </CardHeader>
+                                        <CardBody>
+                                        {cards.rights.map((right) => {
+                                            return (
+                                              <ColumnWrapper>
+                                                <Box
+                                                  borderWidth="1px"
+                                                  w="100%"
+                                                  p={1}
+                                                  color="black"
+                                                >
+                                                  {right}
+                                                </Box>
+                                              </ColumnWrapper>
+                                            );
+                                          })}
+
+                                        </CardBody>
+                                      </Card>
+                                    </RowWrapper>
+                                  );
+                                }
+                              )}
+                            </DataBox>
+                          </TabPanel>
+                        </TabPanels>
+                      }
+                    </Tabs>
                   </>
                 );
               })}
