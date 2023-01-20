@@ -14,6 +14,7 @@ import {
   Tab,
   TabPanel,
   Box,
+  CardFooter,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -264,7 +265,7 @@ function FlightList() {
                             <DataBox
                               style={{
                                 width: "782px",
-                                height: "260px",
+                                height: "360px",
                                 marginLeft: "-27px",
                               }}
                             >
@@ -282,7 +283,7 @@ function FlightList() {
                                       <Card
                                         style={{
                                           width: "238px",
-                                          height: "230px",
+                                          height: "330px",
                                         }}
                                       >
                                         <CardHeader
@@ -327,6 +328,32 @@ function FlightList() {
                                             );
                                           })}
                                         </CardBody>
+                                        <CardFooter>
+                                          <Button
+                                            onClick={() => {
+                                              if (
+                                                cards.status === "AVAILABLE"
+                                              ) {
+                                                navigate("/cabin-selection", {
+                                                  
+                                                  state: {
+                                                    status: "AVAILABLE",
+                                                    totalPrice: cards?.price?.currency + " " +cards?.price?.amount 
+                                                  },
+                                                });
+                                              } else {
+                                                navigate("/cabin-selection", {
+                                                  state: { status: "ERROR" },
+                                                });
+                                              }
+                                            }}
+                                            colorScheme="red"
+                                            borderRadius="0px"
+                                            width="100%"
+                                          >
+                                            Uçuşu Seç
+                                          </Button>
+                                        </CardFooter>
                                       </Card>
                                     </RowWrapper>
                                   );
@@ -338,7 +365,7 @@ function FlightList() {
                             <DataBox
                               style={{
                                 width: "782px",
-                                height: "260px",
+                                height: "360px",
                                 marginLeft: "-27px",
                               }}
                             >
@@ -356,7 +383,7 @@ function FlightList() {
                                       <Card
                                         style={{
                                           width: "238px",
-                                          height: "230px",
+                                          height: "330px",
                                         }}
                                       >
                                         <CardHeader
@@ -386,7 +413,7 @@ function FlightList() {
                                           </Text>
                                         </CardHeader>
                                         <CardBody>
-                                        {cards.rights.map((right) => {
+                                          {cards.rights.map((right) => {
                                             return (
                                               <ColumnWrapper>
                                                 <Box
@@ -400,8 +427,31 @@ function FlightList() {
                                               </ColumnWrapper>
                                             );
                                           })}
-
                                         </CardBody>
+                                        <CardFooter>
+                                          <Button
+                                            onClick={() => {
+                                              if (
+                                                cards.status === "AVAILABLE"
+                                              ) {
+                                                navigate("/cabin-selection", {
+                                                  state: {
+                                                    status: "AVAILABLE",
+                                                  },
+                                                });
+                                              } else {
+                                                navigate("/cabin-selection", {
+                                                  state: { status: "ERROR" },
+                                                });
+                                              }
+                                            }}
+                                            colorScheme="red"
+                                            borderRadius="0px"
+                                            width="100%"
+                                          >
+                                            Uçuşu Seç
+                                          </Button>
+                                        </CardFooter>
                                       </Card>
                                     </RowWrapper>
                                   );
