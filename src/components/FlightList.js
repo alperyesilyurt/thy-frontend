@@ -68,16 +68,31 @@ function FlightList() {
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
   const navigate = useNavigate();
-  const sortedData = useMemo(
-    () => sortBy(data, "fareCategories").reverse(),
-    [data]
+  const orderedData = sortBy(
+    data,
+    (p) => p.fareCategories["ECONOMY"].subcategories[0].price.amount
   );
-  console.log("sortedData", sortedData);
+
+  const [orderData, setOrderData] = useState(orderedData);
+
   const orderPrice = () => {
-    console.log("order sırala", formData.passenger);
+    setOrderData(
+      sortBy(
+        data,
+        (p) =>
+          p.fareCategories["BUSINESS" || "ECONOMY"].subcategories[0].price
+            .amount
+      )
+    );
   };
   const orderTime = () => {
-    console.log("time sırala");
+    setOrderData(
+      sortBy(
+        data,
+        [(o) => new Date(o.originAirport.arrivalDateTimeDisplay)],
+        ["desc"]
+      )
+    );
   };
 
   return (
@@ -176,11 +191,8 @@ function FlightList() {
             </Button>
           </CardHeader>
           <CardBody>
-            {sortedData &&
-              sortedData.map((item) => {
-                console.log(
-                  item.fareCategories.ECONOMY.subcategories[0].price.amount
-                );
+            {orderData &&
+              orderData.map((item) => {
                 return (
                   <>
                     <Tabs variant="unstyled" align="center">
