@@ -76,8 +76,10 @@ function FlightQuery() {
       );
     });
 
-    if (matchedFlights?.length !== 0) {
-      navigate("/flight-list", {state: {matchedFlights:matchedFlights,formElements:formElements}  });
+    if (matchedFlights?.length !== 0 && counter > 0) {
+      navigate("/flight-list", {
+        state: { matchedFlights: matchedFlights, formElements: formElements },
+      });
     } else {
       toast({
         title: "Opps, Hata",
@@ -200,7 +202,7 @@ function FlightQuery() {
           onClick={() => buttonFunc()}
           size="xs"
           height="48px"
-          width="100px"
+          width="50px"
           colorScheme="red"
           borderRadius="0px"
           icon={<BsChevronRight size={20} />}

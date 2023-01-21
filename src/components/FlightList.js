@@ -74,7 +74,7 @@ function FlightList() {
   );
   console.log("sortedData", sortedData);
   const orderPrice = () => {
-    console.log("order sırala");
+    console.log("order sırala", formData.passenger);
   };
   const orderTime = () => {
     console.log("time sırala");
@@ -242,7 +242,10 @@ function FlightList() {
                                 Yolcu başına
                               </Text>
                               <Text fontSize="xs" as="b" color="black">
-                                TRY{" "}
+                                {
+                                  item.fareCategories.ECONOMY.subcategories[0]
+                                    .price.currency
+                                }{" "}
                                 {
                                   item.fareCategories.ECONOMY.subcategories[0]
                                     .price.amount
@@ -265,7 +268,10 @@ function FlightList() {
                                 Yolcu başına
                               </Text>
                               <Text fontSize="xs" as="b" color="black">
-                                TRY{" "}
+                                {
+                                  item.fareCategories.BUSINESS.subcategories[0]
+                                    .price.currency
+                                }{" "}
                                 {
                                   item.fareCategories.BUSINESS.subcategories[0]
                                     .price.amount
@@ -323,7 +329,7 @@ function FlightList() {
                                           {promotionText &&
                                           cards.brandCode === "ecoFly" ? (
                                             <Text
-                                              fontSize="xs"
+                                              fontSize="md"
                                               as="b"
                                               color="green"
                                             >
@@ -378,10 +384,16 @@ function FlightList() {
                                                 navigate("/cabin-selection", {
                                                   state: {
                                                     status: "AVAILABLE",
-                                                    totalPrice:
-                                                      cards?.price?.currency +
-                                                      " " +
-                                                      cards?.price?.amount,
+                                                    totalPrice: promotionText
+                                                      ? cards?.price?.currency +
+                                                        " " +
+                                                        (cards?.price?.amount *
+                                                          formData.passenger) /
+                                                          2
+                                                      : cards?.price?.currency +
+                                                        " " +
+                                                        cards?.price?.amount *
+                                                          formData.passenger,
                                                   },
                                                 });
                                               } else {
@@ -449,7 +461,7 @@ function FlightList() {
                                           {promotionText &&
                                           cards.brandCode === "ecoFly" ? (
                                             <Text
-                                              fontSize="xs"
+                                              fontSize="md"
                                               as="b"
                                               color="green"
                                             >
@@ -504,6 +516,16 @@ function FlightList() {
                                                 navigate("/cabin-selection", {
                                                   state: {
                                                     status: "AVAILABLE",
+                                                    totalPrice: promotionText
+                                                      ? cards?.price?.currency +
+                                                        " " +
+                                                        (cards?.price?.amount *
+                                                          formData.passenger) /
+                                                          2
+                                                      : cards?.price?.currency +
+                                                        " " +
+                                                        cards?.price?.amount *
+                                                          formData.passenger,
                                                   },
                                                 });
                                               } else {

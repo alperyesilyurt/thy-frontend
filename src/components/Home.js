@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
-import { Text, Button, Box, Image } from "@chakra-ui/react";
+import { Text, Box, Image } from "@chakra-ui/react";
 export const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,7 +31,8 @@ function Home() {
           borderRadius="20px"
         >
           <Link to="/flight-query">
-          <Text as="b">BAŞLA</Text></Link>
+            <Text as="b">BAŞLA</Text>
+          </Link>
         </Box>
         <Box
           display="flex"
@@ -42,7 +43,7 @@ function Home() {
           color="white"
           borderRadius="20px"
         >
-          <Text as= "b">Alper Yeşilyurt THY Frontend Challenge</Text>
+          <Text as="b">Alper Yeşilyurt THY Frontend Challenge</Text>
         </Box>
       </HomeWrapper>
     </>
