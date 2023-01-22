@@ -16,7 +16,7 @@ import {
   Box,
   CardFooter,
 } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -68,6 +68,8 @@ function FlightList() {
   const data = state.state.matchedFlights;
   const formData = state.state.formElements;
   const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
+
   const orderedData = sortBy(
     data,
     (p) => p.fareCategories["ECONOMY"].subcategories[0].price.amount
@@ -76,22 +78,33 @@ function FlightList() {
   const [orderData, setOrderData] = useState(orderedData);
 
   const orderPrice = () => {
+    setClicked(!clicked);
     setOrderData(
-      sortBy(
-        data,
-        (p) =>
-          p.fareCategories["BUSINESS" || "ECONOMY"].subcategories[0].price
-            .amount
-      )
+      clicked
+        ? sortBy(
+            data,
+            (p) => p.fareCategories["ECONOMY"].subcategories[0].price.amount
+          )
+        : sortBy(
+            data,
+            (p) => p.fareCategories["ECONOMY"].subcategories[0].price.amount
+          ).reverse()
     );
   };
-  const orderTime = () => {
+  const orderTime = (e) => {
+    setClicked(!clicked);
     setOrderData(
-      sortBy(
-        data,
-        [(o) => new Date(o.originAirport.arrivalDateTimeDisplay)],
-        ["desc"]
-      )
+      clicked
+        ? sortBy(
+            data,
+            [(o) => !new Date(o.originAirport.arrivalDateTimeDisplay)],
+            ["desc"]
+          )
+        : sortBy(
+            data,
+            [(o) => !new Date(o.originAirport.arrivalDateTimeDisplay)],
+            ["desc"]
+          ).reverse()
     );
   };
 
@@ -180,7 +193,7 @@ function FlightList() {
               Ekonomi Ücreti
             </Button>
             <Button
-              onClick={() => orderTime()}
+              onClick={(e) => orderTime(e)}
               color="white"
               variant="outline"
               size="xs"
